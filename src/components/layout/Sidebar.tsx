@@ -28,7 +28,7 @@ const associateNav = [
 ];
 
 const employerNav = [
-  { label: "Pipeline", icon: RefreshCw, path: "/employer" },
+  { label: "Dashboard", icon: LayoutDashboard, path: "/employer" },
   { label: "Talent Pool", icon: Users, path: "/employer/talent" },
   { label: "Studio", icon: Settings, path: "/employer/studio" },
 ];
