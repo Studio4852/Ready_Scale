@@ -8,7 +8,6 @@ import {
   ClipboardCheck,
   FolderKanban,
   Award,
-  RefreshCw,
   Users,
   Settings,
   Globe,
@@ -17,11 +16,13 @@ import {
   BarChart3,
   LogOut,
   Diamond,
+  Bot,
 } from "lucide-react";
 
 const associateNav = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/associate" },
   { label: "My Learning", icon: BookOpen, path: "/associate/learning" },
+  { label: "AI Mentor", icon: Bot, path: "/associate/mentor" },
   { label: "Assessments", icon: ClipboardCheck, path: "/associate/assessments" },
   { label: "Projects", icon: FolderKanban, path: "/associate/projects" },
   { label: "My Badges", icon: Award, path: "/associate/badges" },
