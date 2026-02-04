@@ -1,20 +1,31 @@
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface RoleCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
   delay?: number;
+  href?: string;
 }
 
-const RoleCard = ({ icon: Icon, title, description, delay = 0 }: RoleCardProps) => {
+const RoleCard = ({ icon: Icon, title, description, delay = 0, href }: RoleCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (href) {
+      navigate(href);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       whileHover={{ y: -4 }}
+      onClick={handleClick}
       className="glass-card p-10 cursor-pointer transition-all duration-300 flex-1 max-w-sm"
     >
       <div className="flex flex-col items-center text-center gap-6">

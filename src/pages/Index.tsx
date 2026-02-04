@@ -32,6 +32,7 @@ const Index = () => {
               title="Associate"
               description="Upskill in AI, verify your readiness score, and get matched with top global employers."
               delay={0.3}
+              href="/readiness-test"
             />
             <RoleCard
               icon={Building2}
