@@ -124,4 +124,27 @@
     @apply flex items-center justify-center w-16 h-16 rounded-xl;
     background: hsl(0 0% 18%);
   }
+  
+  /* Status colors using semantic tokens */
+  .status-active {
+    color: hsl(160 84% 39%);
+  }
+  
+  .status-pending {
+    color: hsl(43 96% 56%);
+  }
+  
+  .status-high {
+    background: hsl(0 84% 60% / 0.2);
+    color: hsl(0 84% 60%);
+  }
+  
+  .status-low {
+    @apply bg-muted text-muted-foreground;
+  }
+  
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+    background: hsl(160 84% 39%);
+  }
 }

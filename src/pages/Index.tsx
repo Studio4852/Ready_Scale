@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2 } from "lucide-react";
+import { ShieldCheck, Building2, Settings2 } from "lucide-react";
 import Badge from "@/components/Badge";
 import Logo from "@/components/Logo";
 import RoleCard from "@/components/RoleCard";
-import SectionLabel from "@/components/SectionLabel";
 
 const Index = () => {
   return (
@@ -32,18 +31,28 @@ const Index = () => {
               title="Associate"
               description="Upskill in AI, verify your readiness score, and get matched with top global employers."
               delay={0.3}
-              href="/readiness-test"
+              href="/associate"
             />
             <RoleCard
               icon={Building2}
               title="Employer"
               description="Build custom training paths, manage talent pipelines, and hire verified experts with confidence."
               delay={0.4}
+              href="/employer"
             />
           </div>
 
           {/* Platform Management Label */}
-          <SectionLabel text="Platform Management" />
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            onClick={() => window.location.href = "/management"}
+            className="flex items-center gap-2 text-muted-foreground/60 text-xs tracking-[0.2em] uppercase hover:text-muted-foreground transition-colors"
+          >
+            <Settings2 className="w-3.5 h-3.5" />
+            <span>Platform Management</span>
+          </motion.button>
         </div>
       </main>
     </div>
