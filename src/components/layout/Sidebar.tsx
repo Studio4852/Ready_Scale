@@ -1,6 +1,7 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useUser } from "@/contexts/UserContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/types/user";
 import {
   LayoutDashboard,
@@ -45,7 +46,9 @@ const managementNav = [
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, setRole } = useUser();
+  const { isAuthenticated, logout } = useAuth();
 
   const navItems =
     user.role === "associate"
@@ -58,6 +61,24 @@ const Sidebar = () => {
     associate: "ASSOCIATE",
     employer: "EMPLOYER",
     management: "MANAGEMENT",
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const handleRoleChange = (role: UserRole) => {
+    if (role === "associate") {
+      // Check if readiness test is completed
+      const readinessCompleted = localStorage.getItem("readinessCompleted");
+      if (!readinessCompleted) {
+        navigate("/readiness-test");
+        return;
+      }
+    }
+    setRole(role);
+    navigate(`/${role}`);
   };
 
   return (
@@ -101,7 +122,7 @@ const Sidebar = () => {
           {(["associate", "employer", "management"] as UserRole[]).map((role) => (
             <button
               key={role}
-              onClick={() => setRole(role)}
+              onClick={() => handleRoleChange(role)}
               className={cn(
                 "px-2 py-1 text-xs rounded border transition-colors",
                 user.role === role
@@ -134,7 +155,10 @@ const Sidebar = () => {
 
       {/* Logout */}
       <div className="p-4 pt-0">
-        <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
           <LogOut className="w-4 h-4" />
           Logout
         </button>
