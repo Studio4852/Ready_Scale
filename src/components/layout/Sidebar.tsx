@@ -44,6 +44,12 @@ const managementNav = [
   { label: "Reports", icon: BarChart3, path: "/management/reports" },
 ];
 
+const trainerNav = [
+  { label: "Dashboard", icon: LayoutDashboard, path: "/trainer" },
+  { label: "My Courses", icon: BookOpen, path: "/trainer/courses" },
+  { label: "Payments", icon: BarChart3, path: "/trainer/payments" },
+];
+
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,12 +61,15 @@ const Sidebar = () => {
       ? associateNav
       : user.role === "employer"
       ? employerNav
+      : user.role === "trainer"
+      ? trainerNav
       : managementNav;
 
   const roleLabels: Record<UserRole, string> = {
     associate: "ASSOCIATE",
     employer: "EMPLOYER",
     management: "MANAGEMENT",
+    trainer: "TRAINER",
   };
 
   const handleLogout = () => {
@@ -119,7 +128,7 @@ const Sidebar = () => {
           ACCESS PORTAL
         </p>
         <div className="flex flex-wrap gap-2">
-          {(["associate", "employer", "management"] as UserRole[]).map((role) => (
+          {(["associate", "employer", "management", "trainer"] as UserRole[]).map((role) => (
             <button
               key={role}
               onClick={() => handleRoleChange(role)}

@@ -25,6 +25,12 @@ const mockUsers: Record<UserRole, User> = {
     email: "admin@readyscale.ai",
     role: "management",
   },
+  trainer: {
+    id: "4",
+    name: "Sarah Trainer",
+    email: "sarah@readyscale.ai",
+    role: "trainer",
+  },
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
