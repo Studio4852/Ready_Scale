@@ -4,10 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Landing
 import Index from "./pages/Index";
 import ReadinessTest from "./pages/ReadinessTest";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 // Associate Pages
@@ -35,43 +37,46 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <UserProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Landing */}
-            <Route path="/" element={<Index />} />
-            <Route path="/readiness-test" element={<ReadinessTest />} />
+    <AuthProvider>
+      <UserProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Landing */}
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/readiness-test" element={<ReadinessTest />} />
 
-            {/* Associate Portal */}
-            <Route path="/associate" element={<AssociateDashboard />} />
-            <Route path="/associate/learning" element={<Learning />} />
-            <Route path="/associate/mentor" element={<Mentor />} />
-            <Route path="/associate/assessments" element={<Assessments />} />
-            <Route path="/associate/projects" element={<Projects />} />
-            <Route path="/associate/badges" element={<Badges />} />
+              {/* Associate Portal */}
+              <Route path="/associate" element={<AssociateDashboard />} />
+              <Route path="/associate/learning" element={<Learning />} />
+              <Route path="/associate/mentor" element={<Mentor />} />
+              <Route path="/associate/assessments" element={<Assessments />} />
+              <Route path="/associate/projects" element={<Projects />} />
+              <Route path="/associate/badges" element={<Badges />} />
 
-            {/* Employer Portal */}
-            <Route path="/employer" element={<EmployerPipeline />} />
-            <Route path="/employer/talent" element={<TalentPool />} />
-            <Route path="/employer/studio" element={<Studio />} />
+              {/* Employer Portal */}
+              <Route path="/employer" element={<EmployerPipeline />} />
+              <Route path="/employer/talent" element={<TalentPool />} />
+              <Route path="/employer/studio" element={<Studio />} />
 
-            {/* Management Portal */}
-            <Route path="/management" element={<ManagementDashboard />} />
-            <Route path="/management/users" element={<ManagementUsers />} />
-            <Route path="/management/clients" element={<ManagementClients />} />
-            <Route path="/management/marketplace" element={<ManagementMarketplace />} />
-            <Route path="/management/support" element={<ManagementSupport />} />
-            <Route path="/management/reports" element={<ManagementReports />} />
+              {/* Management Portal */}
+              <Route path="/management" element={<ManagementDashboard />} />
+              <Route path="/management/users" element={<ManagementUsers />} />
+              <Route path="/management/clients" element={<ManagementClients />} />
+              <Route path="/management/marketplace" element={<ManagementMarketplace />} />
+              <Route path="/management/support" element={<ManagementSupport />} />
+              <Route path="/management/reports" element={<ManagementReports />} />
 
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </UserProvider>
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </UserProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bot, Send, User, Sparkles, BookOpen, Code, Lightbulb } from "lucide-react";
+import { Bot, Send, User, Sparkles, BookOpen, Code, Lightbulb, Loader2 } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,12 +29,141 @@ const initialMessages: Message[] = [
   },
 ];
 
+// Enhanced AI response generator
+const generateAIResponse = (userMessage: string): string => {
+  const lowerMessage = userMessage.toLowerCase();
+
+  if (lowerMessage.includes("react hooks") || lowerMessage.includes("hooks")) {
+    return `Great question about React Hooks! Here's a quick overview:
+
+**useState** - Manages component state
+\`\`\`javascript
+const [count, setCount] = useState(0);
+\`\`\`
+
+**useEffect** - Handles side effects (API calls, subscriptions)
+\`\`\`javascript
+useEffect(() => {
+  fetchData();
+}, [dependency]);
+\`\`\`
+
+**useContext** - Accesses context values without prop drilling
+
+**useCallback & useMemo** - Optimization hooks for memoization
+
+Would you like me to dive deeper into any specific hook?`;
+  }
+
+  if (lowerMessage.includes("devops") || lowerMessage.includes("assessment")) {
+    return `Let's prepare for your DevOps assessment! Here are key areas to focus on:
+
+**1. CI/CD Pipelines**
+- GitHub Actions, Jenkins, GitLab CI
+- Build, test, deploy stages
+
+**2. Containerization**
+- Docker fundamentals
+- Container orchestration with Kubernetes
+
+**3. Infrastructure as Code**
+- Terraform basics
+- CloudFormation (AWS)
+
+**4. Monitoring & Logging**
+- Prometheus, Grafana
+- ELK Stack
+
+Would you like practice questions on any of these topics?`;
+  }
+
+  if (lowerMessage.includes("coding challenge") || lowerMessage.includes("challenge")) {
+    return `Here's a coding challenge for you:
+
+**Challenge: Two Sum**
+
+Given an array of integers \`nums\` and a target \`target\`, return indices of the two numbers that add up to target.
+
+Example:
+\`\`\`
+Input: nums = [2, 7, 11, 15], target = 9
+Output: [0, 1]
+Explanation: nums[0] + nums[1] = 2 + 7 = 9
+\`\`\`
+
+**Constraints:**
+- You may not use the same element twice
+- Only one valid answer exists
+
+Try solving it, and I'll review your approach! 🚀`;
+  }
+
+  if (lowerMessage.includes("career") || lowerMessage.includes("job") || lowerMessage.includes("interview")) {
+    return `Great that you're thinking about your career! Here are some tips:
+
+**Technical Preparation:**
+- Practice LeetCode/HackerRank regularly
+- Build portfolio projects
+- Contribute to open source
+
+**Soft Skills:**
+- Clear communication
+- Problem-solving approach
+- Team collaboration examples
+
+**Interview Tips:**
+- Think out loud during coding
+- Ask clarifying questions
+- Discuss trade-offs in your solutions
+
+What specific role are you targeting?`;
+  }
+
+  if (lowerMessage.includes("help") || lowerMessage.includes("what can you do")) {
+    return `I'm here to accelerate your learning journey! I can help with:
+
+📚 **Learning Concepts** - Explain programming topics, frameworks, and best practices
+
+🎯 **Assessment Prep** - Practice questions and study guides for your certifications
+
+💻 **Code Reviews** - Review your code and suggest improvements
+
+🧩 **Coding Challenges** - Algorithmic problems to sharpen your skills
+
+🚀 **Career Guidance** - Interview prep, resume tips, and career path advice
+
+What would you like to explore?`;
+  }
+
+  // Default response
+  return `That's an interesting question! Based on your query about "${userMessage.slice(0, 50)}${userMessage.length > 50 ? "..." : ""}", here are some thoughts:
+
+1. **Understanding the fundamentals** is key to mastering any topic
+2. **Practice regularly** - consistency beats intensity
+3. **Build real projects** to solidify your learning
+
+Would you like me to:
+- Provide more specific resources?
+- Give you practice exercises?
+- Explain a related concept?
+
+Just let me know how I can help you learn better!`;
+};
+
 const Mentor = () => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const handleSend = () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
 
     const userMessage: Message = {
       id: messages.length + 1,
@@ -44,18 +173,21 @@ const Mentor = () => {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const userInput = input;
     setInput("");
+    setIsTyping(true);
 
-    // Simulate AI response
+    // Simulate AI thinking and typing
     setTimeout(() => {
       const aiResponse: Message = {
         id: messages.length + 2,
         role: "assistant",
-        content: "That's a great question! Let me help you with that. This is a demo response - in a full implementation, I would provide detailed guidance on your query, including code examples, explanations, and resources to help you learn effectively.",
+        content: generateAIResponse(userInput),
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
+      setIsTyping(false);
+    }, 1000 + Math.random() * 1000);
   };
 
   const handlePromptClick = (prompt: string) => {
@@ -123,10 +255,24 @@ const Mentor = () => {
                         : "bg-muted/50 text-foreground"
                     }`}
                   >
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                    <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {message.content}
+                    </div>
                   </div>
                 </div>
               ))}
+              {isTyping && (
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-muted text-foreground">
+                    <Bot className="w-4 h-4" />
+                  </div>
+                  <div className="bg-muted/50 rounded-2xl px-4 py-3 flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span className="text-sm text-muted-foreground">Thinking...</span>
+                  </div>
+                </div>
+              )}
+              <div ref={scrollRef} />
             </div>
           </ScrollArea>
 
@@ -159,11 +305,12 @@ const Mentor = () => {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
                 placeholder="Ask your AI Mentor anything..."
                 className="flex-1 bg-muted/30 border-border"
+                disabled={isTyping}
               />
-              <Button onClick={handleSend} className="gap-2">
+              <Button onClick={handleSend} className="gap-2" disabled={isTyping || !input.trim()}>
                 <Send className="w-4 h-4" />
                 Send
               </Button>

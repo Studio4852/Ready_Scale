@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
+import { useReadinessTest } from "@/hooks/useReadinessTest";
 
 const questions = [
   {
@@ -73,6 +74,7 @@ const getScoreLevel = (score: number) => {
 
 const ReadinessTest = () => {
   const navigate = useNavigate();
+  const { completeTest } = useReadinessTest();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
@@ -109,8 +111,13 @@ const ReadinessTest = () => {
     setShowResults(false);
   };
 
+  const handleContinueToDashboard = () => {
+    completeTest(totalScore, scoreInfo.level);
+    navigate("/associate");
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
       <header className="p-6">
         <button
@@ -223,9 +230,9 @@ const ReadinessTest = () => {
                     <Button variant="outline" onClick={handleRestart} className="gap-2">
                       Retake Test
                     </Button>
-                    <Button onClick={() => navigate("/")} className="gap-2">
+                    <Button onClick={handleContinueToDashboard} className="gap-2">
                       <Zap className="w-4 h-4" />
-                      Get Matched with Employers
+                      Continue to Dashboard
                     </Button>
                   </div>
                 </div>
