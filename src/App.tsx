@@ -34,6 +34,11 @@ import ManagementMarketplace from "./pages/management/Marketplace";
 import ManagementSupport from "./pages/management/Support";
 import ManagementReports from "./pages/management/Reports";
 
+// Trainer Pages
+import TrainerDashboard from "./pages/trainer/Dashboard";
+import TrainerCourses from "./pages/trainer/Courses";
+import TrainerPayments from "./pages/trainer/Payments";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -70,6 +75,11 @@ const App = () => (
               <Route path="/management/marketplace" element={<ManagementMarketplace />} />
               <Route path="/management/support" element={<ManagementSupport />} />
               <Route path="/management/reports" element={<ManagementReports />} />
+
+              {/* Trainer Portal */}
+              <Route path="/trainer" element={<TrainerDashboard />} />
+              <Route path="/trainer/courses" element={<TrainerCourses />} />
+              <Route path="/trainer/payments" element={<TrainerPayments />} />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
