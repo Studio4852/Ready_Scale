@@ -97,12 +97,21 @@ const AssociateDashboard = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="aspect-[4/3] rounded-xl bg-muted/30 border border-border"
-              />
-            ))}
+            <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-3">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Strength</div>
+              <p className="text-sm text-foreground font-medium">Strong API integration skills</p>
+              <p className="text-xs text-muted-foreground">Your projects show consistent use of RESTful patterns and error handling.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-3">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Focus Area</div>
+              <p className="text-sm text-foreground font-medium">Prompt Engineering</p>
+              <p className="text-xs text-muted-foreground">Complete the advanced prompting module to boost your readiness score.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-3">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Next Step</div>
+              <p className="text-sm text-foreground font-medium">Complete Cloud AI Badge</p>
+              <p className="text-xs text-muted-foreground">1 assessment remaining to unlock employer matching.</p>
+            </div>
           </div>
         </motion.div>
       </div>
