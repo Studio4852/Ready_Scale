@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Building2, Settings2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Badge from "@/components/Badge";
 import Logo from "@/components/Logo";
 import RoleCard from "@/components/RoleCard";
 
 const Index = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
@@ -47,7 +49,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            onClick={() => window.location.href = "/management"}
+            onClick={() => navigate("/management")}
             className="flex items-center gap-2 text-muted-foreground/60 text-xs tracking-[0.2em] uppercase hover:text-muted-foreground transition-colors"
           >
             <Settings2 className="w-3.5 h-3.5" />
