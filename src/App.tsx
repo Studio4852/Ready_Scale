@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import RequireReadiness from "@/components/auth/RequireReadiness";
 
 // Landing
 import Index from "./pages/Index";
@@ -50,12 +51,12 @@ const App = () => (
               <Route path="/readiness-test" element={<ReadinessTest />} />
 
               {/* Associate Portal */}
-              <Route path="/associate" element={<AssociateDashboard />} />
-              <Route path="/associate/learning" element={<Learning />} />
-              <Route path="/associate/mentor" element={<Mentor />} />
-              <Route path="/associate/assessments" element={<Assessments />} />
-              <Route path="/associate/projects" element={<Projects />} />
-              <Route path="/associate/badges" element={<Badges />} />
+              <Route path="/associate" element={<RequireReadiness><AssociateDashboard /></RequireReadiness>} />
+              <Route path="/associate/learning" element={<RequireReadiness><Learning /></RequireReadiness>} />
+              <Route path="/associate/mentor" element={<RequireReadiness><Mentor /></RequireReadiness>} />
+              <Route path="/associate/assessments" element={<RequireReadiness><Assessments /></RequireReadiness>} />
+              <Route path="/associate/projects" element={<RequireReadiness><Projects /></RequireReadiness>} />
+              <Route path="/associate/badges" element={<RequireReadiness><Badges /></RequireReadiness>} />
 
               {/* Employer Portal */}
               <Route path="/employer" element={<EmployerPipeline />} />
